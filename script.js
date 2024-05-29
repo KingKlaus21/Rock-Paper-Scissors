@@ -28,36 +28,73 @@ console.log("getComputerChoice() returned " + getComputerChoice()); // check com
 function getHumanChoice(){
     let humanChoice = prompt("Rock, paper, or scissors?");
 
-    if (humanChoice == null || humanChoice.toUpperCase() != "ROCK" && humanChoice.toUpperCase() != "PAPER" && humanChoice.toUpperCase() != "SCISSORS"){
-        getHumanChoice();
+    if (humanChoice == null || humanChoice == undefined || humanChoice.toUpperCase() != "ROCK" && humanChoice.toUpperCase() != "PAPER" && humanChoice.toUpperCase() != "SCISSORS"){
+        return getHumanChoice();
         // If you hit cancel, escape, hit ok without putting data in, or put the wrong data in this triggers.
         // .toUpperCase() allows users to put funky stuff like "rOcK" in without triggering this.
+        // It returns the value so that the function doesn't keep an undefined value if this needs to run.
     }
 
     else {
 
         humanChoice = humanChoice.toUpperCase();
+        // console.log(humanChoice);
+        // consider changing variable name since later functions use humanChoice
 
-        if (humanChoice == "ROCK"){
+        if (humanChoice === "ROCK"){
             console.log("human chose rock");
             return("ROCK");
         }
-        else if (humanChoice == "PAPER"){
+        else if (humanChoice === "PAPER"){
             console.log("human chose paper")
             return("PAPER");
         }
-        else if (humanChoice == "SCISSORS"){
+        else if (humanChoice === "SCISSORS"){
             console.log("human chose scissors");
-            return("SCISSORS");
+            return ("SCISSORS");
         }
-        else if (humanChoice == null) {
-            console.log("fuck");
+        else{
+            console.log("was not rock, paper, or scissors and beat first test somehow");
         }
-
     }
 }
 
-console.log("getHumanChoice() returned " + getHumanChoice());
+console.log("getHumanChoice() returned " + getHumanChoice()); // check human move
+
+// function testingReturn(){
+//     let test = undefined;
+//     return(false ? "BALLS" : "LOL");
+// }
+
+
+// console.log(testingReturn());
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// function buggedPromptReturnsUndefined(buggyFunction){
+//     if (buggyFunction == undefined) {
+//         console.log("I'm going to cry");
+//     }
+//     else {
+//         console.log("Function was not undefined")
+//     }
+// }
+
+// buggedPromptReturnsUndefined(getHumanChoice());
+
+// use above function for checking if one of the functions is undefined
+// figure out how you dont call it more than needed
 
 
 
