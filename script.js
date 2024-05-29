@@ -25,6 +25,41 @@ function getComputerChoice() {
 console.log("getComputerChoice() returned " + getComputerChoice()); // check computer return
 
 
+function getHumanChoice(){
+    let humanChoice = prompt("Rock, paper, or scissors?");
+
+    if (humanChoice == null || humanChoice.toUpperCase() != "ROCK" && humanChoice.toUpperCase() != "PAPER" && humanChoice.toUpperCase() != "SCISSORS"){
+        getHumanChoice();
+        // If you hit cancel, escape, hit ok without putting data in, or put the wrong data in this triggers.
+        // .toUpperCase() allows users to put funky stuff like "rOcK" in without triggering this.
+    }
+
+    else {
+
+        humanChoice = humanChoice.toUpperCase();
+
+        if (humanChoice == "ROCK"){
+            console.log("human chose rock");
+            return("ROCK");
+        }
+        else if (humanChoice == "PAPER"){
+            console.log("human chose paper")
+            return("PAPER");
+        }
+        else if (humanChoice == "SCISSORS"){
+            console.log("human chose scissors");
+            return("SCISSORS");
+        }
+        else if (humanChoice == null) {
+            console.log("fuck");
+        }
+
+    }
+}
+
+console.log("getHumanChoice() returned " + getHumanChoice());
+
+
 
 
 
@@ -41,7 +76,7 @@ console.log("getComputerChoice() returned " + getComputerChoice()); // check com
 
 // function getHumanChoice() {
 //     let humanMove = prompt("Rock, Paper, or Scissors?");
-//     humanMove = humanMove.toUpperCase;
+//     humanMove = humanMove.toUpperCase();
 //     console.log(humanMove, "humanMove check ran");
 
 //     if 
@@ -64,10 +99,13 @@ switch(humanMove) {
             break;
         default:
             humanMove = prompt("Try again.  Rock, paper, or scissors?");
-            humanMove = humanMove.toUpperCase;
+            humanMove = humanMove.toUpperCase();
             console.log(humanMove);
     }
 */
+
+
+
 
 
 /*
