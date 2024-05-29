@@ -1,6 +1,8 @@
 'use strict';
 
+
 console.log("javascript working");
+
 
 function getComputerChoice() {
     let computerMove = Math.random();
@@ -22,13 +24,13 @@ function getComputerChoice() {
     }
 }
 
-console.log("getComputerChoice() returned " + getComputerChoice()); // check computer return
+// console.log("getComputerChoice() returned " + getComputerChoice()); // check computer return
 
 
 function getHumanChoice(){
-    let humanChoice = prompt("Rock, paper, or scissors?");
+    let humanMove = prompt("Rock, paper, or scissors?");
 
-    if (humanChoice == null || humanChoice == undefined || humanChoice.toUpperCase() != "ROCK" && humanChoice.toUpperCase() != "PAPER" && humanChoice.toUpperCase() != "SCISSORS"){
+    if (humanMove == null || humanMove == undefined || humanMove.toUpperCase() != "ROCK" && humanMove.toUpperCase() != "PAPER" && humanMove.toUpperCase() != "SCISSORS"){
         return getHumanChoice();
         // If you hit cancel, escape, hit ok without putting data in, or put the wrong data in this triggers.
         // .toUpperCase() allows users to put funky stuff like "rOcK" in without triggering this.
@@ -37,19 +39,18 @@ function getHumanChoice(){
 
     else {
 
-        humanChoice = humanChoice.toUpperCase();
-        // console.log(humanChoice);
-        // consider changing variable name since later functions use humanChoice
+        humanMove = humanMove.toUpperCase();
+        // console.log(humanMove);
 
-        if (humanChoice === "ROCK"){
+        if (humanMove === "ROCK"){
             console.log("human chose rock");
             return("ROCK");
         }
-        else if (humanChoice === "PAPER"){
+        else if (humanMove === "PAPER"){
             console.log("human chose paper")
             return("PAPER");
         }
-        else if (humanChoice === "SCISSORS"){
+        else if (humanMove === "SCISSORS"){
             console.log("human chose scissors");
             return ("SCISSORS");
         }
@@ -59,7 +60,61 @@ function getHumanChoice(){
     }
 }
 
-console.log("getHumanChoice() returned " + getHumanChoice()); // check human move
+// console.log("getHumanChoice() returned " + getHumanChoice()); // check human move.  disable when playing
+
+
+// globals for score:
+let humanScore = 0;
+let computerScore = 0;
+
+
+function playRound(humanChoice, computerChoice) {
+    if (humanChoice === "ROCK" && computerChoice === "SCISSORS" ||
+        humanChoice === "PAPER" && computerChoice === "ROCK" ||
+        humanChoice === "SCISSORS" && computerChoice === "PAPER"){
+
+            humanScore++;
+            // increments humanScore
+            alert("You WIN!  " + humanChoice + " beats " + computerChoice + "!  " 
+                  + "The score is " + humanScore + " to " + computerScore + ".");
+            // Outputs something like:
+            // "You WIN!  ROCK beats SCISSORS!  The score is 3 to 2"
+        }
+
+    else if (humanChoice === "ROCK" && computerChoice === "PAPER" ||
+             humanChoice === "PAPER" && computerChoice === "SCISSORS" ||
+             humanChoice === "SCISSORS" && computerChoice === "ROCK"){
+
+                computerScore++;
+                // increments computerScore
+                alert("You LOSE!  " + computerChoice + " beats " + humanChoice + "!  " 
+                      + "The score is " + humanScore + " to " + computerScore + ".");
+                // humanScore always showed first for clarity
+             }
+
+    else {
+        
+        alert("DRAW!  " + "You both played " + humanChoice + ".  "
+              + "The score is " + humanScore + " to " + computerScore + ".");
+        // Since both moves were the same, you can just output the value of either
+        // humanChoice or computerChoice since it would look dumb to write both out
+    }
+}
+
+
+const humanSelection = getHumanChoice();
+const computerSelection = getComputerChoice();
+
+
+playRound(humanSelection, computerSelection);
+
+
+
+
+
+
+
+
 
 // function testingReturn(){
 //     let test = undefined;
