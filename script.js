@@ -93,7 +93,7 @@ function playRound(humanChoice, computerChoice) {
              }
 
     else {
-        
+
         alert("DRAW!  " + "You both played " + humanChoice + ".  "
               + "The score is " + humanScore + " to " + computerScore + ".");
         // Since both moves were the same, you can just output the value of either
@@ -102,11 +102,40 @@ function playRound(humanChoice, computerChoice) {
 }
 
 
-const humanSelection = getHumanChoice();
-const computerSelection = getComputerChoice();
+function playGame() {
+
+    for (let round = 1; round < 6; round++){
+
+        const humanSelection = getHumanChoice();
+        const computerSelection = getComputerChoice();
+
+        playRound(humanSelection, computerSelection);
+
+        console.log(round);
+    }
+}
+
+playGame();
+
+// function toBegin() {
+
+//     let begin = confirm('Press "Ok" to Begin');
+
+//     if (humanMove == null || humanMove == undefined){
+//         alert("Reload Page to Try Again");
+//     }
+//     else{
+//         playGame();
+//     }
+// }
+
+// toBegin();
 
 
-playRound(humanSelection, computerSelection);
+
+
+
+// playRound(humanSelection, computerSelection);
 
 
 
