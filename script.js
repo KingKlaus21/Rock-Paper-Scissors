@@ -1,24 +1,53 @@
 'use strict';
 
+// globals for score:
+let humanScore = 0;
+let computerScore = 0;
 
-console.log("javascript working");
+let totalHumanScore = 0;
+let totalComputerScore = 0;
+
+
+function toBegin() {
+
+    humanScore = 0;
+    computerScore = 0;
+    // set both to zero to start so that consecutive game start at 0
+    // total scores do not reset since they are incremented per game
+
+    let begin = confirm('Press "Ok" to play!');
+
+    if (begin == true) {
+        playGame();
+    }
+    else {
+        let confirmCancel = confirm("Are you sure you want to quit?  Your game progress will be lost.");
+
+        if (confirmCancel == true) {
+            alert("Goodbye!  You can reload the page to play again later.");
+        }
+        else {
+            return toBegin();
+        }
+    }
+}
 
 
 function getComputerChoice() {
     let computerMove = Math.random();
-    console.log(computerMove);
+    // console.log(computerMove);
 
     if (computerMove <= 0.33) {
-        console.log("computer chose rock");
+        // console.log("computer chose rock");
         return("ROCK");
     }
     else if (computerMove <= 0.66 && computerMove > 0.33) {
-        console.log("computer chose paper");
+        // console.log("computer chose paper");
         return("PAPER");
         
     }
     else {
-        console.log("computer chose scissors");
+        // console.log("computer chose scissors");
         return("SCISSORS");
         
     }
@@ -43,29 +72,22 @@ function getHumanChoice(){
         // console.log(humanMove);
 
         if (humanMove === "ROCK"){
-            console.log("human chose rock");
+            // console.log("human chose rock");
             return("ROCK");
         }
         else if (humanMove === "PAPER"){
-            console.log("human chose paper")
+            // console.log("human chose paper")
             return("PAPER");
         }
         else if (humanMove === "SCISSORS"){
-            console.log("human chose scissors");
+            // this could have been just "else" but it reads better like this
+            // console.log("human chose scissors");
             return ("SCISSORS");
-        }
-        else{
-            console.log("was not rock, paper, or scissors and beat first test somehow");
         }
     }
 }
 
 // console.log("getHumanChoice() returned " + getHumanChoice()); // check human move.  disable when playing
-
-
-// globals for score:
-let humanScore = 0;
-let computerScore = 0;
 
 
 function playRound(humanChoice, computerChoice) {
@@ -111,25 +133,62 @@ function playGame() {
 
         playRound(humanSelection, computerSelection);
 
-        console.log(round);
+        // console.log("There have been this many rounds: " + round);
     }
+
+    endGame();
+
 }
 
-playGame();
 
-// function toBegin() {
+function endGame(){
 
-//     let begin = confirm('Press "Ok" to Begin');
+    if (humanScore > computerScore){
 
-//     if (humanMove == null || humanMove == undefined){
-//         alert("Reload Page to Try Again");
-//     }
-//     else{
-//         playGame();
-//     }
-// }
+        totalHumanScore++;
+        // increments per game won for gameResult()
 
-// toBegin();
+        alert("YOU WON!!!  " + "The final score was " + humanScore + " to " + computerScore + ".");
+    }
+
+    else if (humanScore < computerScore){
+
+        totalComputerScore++;
+        // increments per game won for gameResult()
+
+        alert("YOU LOSE!!!  BOO!!!  YOU SUCK!!!!!!!  " + "The final score was " + humanScore + " to " + computerScore + ".");
+    }
+
+    else {
+        
+        alert("DRAW!!!  " + "The final score was " + humanScore + " to " + computerScore + ".");
+    }
+
+    gameResult();
+
+}
+
+
+function gameResult(){
+
+    if (totalHumanScore > totalComputerScore){
+        alert("You are winning against The Machine.  You have won " + totalHumanScore + " game(s), and The Machine has won " + totalComputerScore + " game(s).");
+    }
+    else if (totalHumanScore < totalComputerScore){
+        alert("You are losing to The Machine.  You have won " + totalHumanScore + " game(s), and The Machine has won " + totalComputerScore + " game(s).");
+    }
+    else {
+        alert("You and The Machine are all tied up.  You have won " + totalHumanScore + " game(s), and The Machine has won " + totalComputerScore + " game(s).")
+    }
+
+    toBegin();
+
+}
+
+// playGame();
+toBegin();
+
+
 
 
 
