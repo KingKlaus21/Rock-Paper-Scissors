@@ -4,8 +4,253 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+
+    <style>
+
+
+        h1 {
+            font-size: 55px;
+            text-align: center;
+            margin: 12px;
+
+            text-align: center;
+        }
+
+        h2 {
+            font-size: 50px;
+            margin: 3px;
+
+            text-align: center;
+        }
+
+        h3 {
+            font-size: 40px;
+            margin: 0px;
+
+            text-align: center;
+        }
+
+        img {
+            border-style: solid;
+            border-radius: 10px;
+            border-color: black;
+            border-width: 4px;
+
+            width: 220px;
+            height: 220px;
+        }
+
+        /*  */
+
+        .playerName,
+        img {
+            -webkit-user-select: none; /* Safari */
+            -ms-user-select: none; /* IE 10 and IE 11 */
+            user-select: none; /* Standard syntax */
+        }
+
+        /*  */
+
+        .bothPlayersContainer {
+            margin: 0px 30px;
+
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .playerContainer {
+            background-color:rgb(245, 134, 189);
+            border-style:solid;
+            border-radius: 10px;
+            border-color: red;
+        }
+
+        .allOptionsContainer {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .optionContainer {
+            background-color: rgb(250, 75, 104);
+            border-style:outset;
+            border-radius: 14px;
+            border-width: 12px;
+            border-color: red;
+
+            height: 250px;
+            width: 250px;
+
+            margin: 10px 20px;
+            padding: 30px;
+
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            cursor: pointer;
+        }
+
+        /*  */
+
+        .allInfoContainer {
+            background-color: rgb(245, 134, 189);
+            border-style:solid;
+            border-radius: 10px;
+            border-color: red;
+
+            margin: 15px 30px;
+
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .infoContainer {
+            background-color: rgb(250, 75, 104);
+            border-style:solid;
+            border-radius: 10px;
+            border-color: red;
+
+            height: 270px;
+            width: 550px;
+
+            margin: 10px 20px;
+            padding: 5px;
+
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        #longContainer {
+            width: 600px;
+        }
+
+        /*  */
+
+        .buttonIn {
+            border-style: inset;
+            background-color: rgb(210, 55, 84);
+            box-shadow: 0px 0px 20px rgb(110, 55, 84) inset;
+        }
+
+        .buttonInImg {
+            width: 200px;
+            height: 200px;
+        }
+
+        /*  */
+
+        #neverToggle,
+        .noToggle {
+            cursor: not-allowed;
+        }
+
+        /*  */
+
+        .scoreCounter {
+            font-size: 140px;
+            text-align: center;
+            margin: 0px;
+            margin-top: 30px;            
+        }
+
+        /*  */
+
+        .playButton {
+            padding: 30px 80px;
+            background-color: green;
+            border-style: outset;
+            border-width: 8px;
+            border-radius: 10px;
+            font-size: 50px;
+            text-align: center;
+            font-size: 70px;
+            font-weight: 900;
+            color: white;
+            width: 160px;
+            height: 80px;
+            cursor: pointer;
+        }
+
+        .playPressed {
+            border-style: inset;
+            box-shadow: 0px 0px 25px rgb(0, 65, 0) inset;
+            font-size: 65px;
+            text-align: center;
+        }
+
+        /*  */
+
+        .anyMessage {
+            font-size: 40px;
+            font-weight: bolder;
+            text-align: center;
+            margin: 0px;
+        }
+
+    </style>
 </head>
+
+
+<header>
+    
+    <h1 id="title">Rock-Paper-Scissors</h1>
+
+</header>
+
 <body>
+    <div class="bothPlayersContainer">
+        <div class="playerContainer">
+            <h2 class="playerName">You</h2>
+            <div class="allOptionsContainer">
+                <div id="ROCK" class="optionContainer noToggle">
+                    <img id="rockImg" src="./images/Rock.jpeg">
+                </div>
+                <div id="PAPER" class="optionContainer noToggle">
+                    <img id="paperImg" src="./images/cursed_toilet_paper_by_oakhayboomer_deba8vf-fullview.jpg">
+                </div>
+                <div id="SCISSORS" class="optionContainer noToggle">
+                    <img id="scissorsImg" src="./images/Scissors_cutting_water.jpeg">
+                </div>
+            </div>
+        </div>
+
+        <div class="playerContainer">
+            <h2 id="specialMargin" class="playerName">Opponent</h2>
+            <div class="allOptionsContainer">
+                <div id="neverToggle" class="optionContainer">
+                    <img id="opponentImg" src="./images/shruggingMeme.jpeg">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    
+    <div class="allInfoContainer">
+        <div class="infoContainer">
+            <div class="scoreContainer">
+                <h3>Match Score</h3>
+                <!-- append p here with match score-->
+            </div>
+        </div>
+        <div id="longContainer" class="infoContainer">
+            <div class="messageContainer">
+                <!-- append messages here -->
+                <!-- append play button here -->
+            </div>
+        </div>
+        <div class="infoContainer">
+            <div class="gameContainer">
+                <h3>Game Score</h3>
+                <!-- append p element here with game score -->
+            </div>
+        </div>
+    </div>
+
     <script src="script.js"></script>
+    
 </body>
 </html>

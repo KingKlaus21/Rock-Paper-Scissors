@@ -8,29 +8,99 @@ let totalHumanScore = 0;
 let totalComputerScore = 0;
 
 
-function toBegin() {
+// alerts user before closing website or reloading
+window.onbeforeunload = function(event) {
+    event.preventDefault();
+    event.returnValue = true;
+};
 
+
+const buttons = document.querySelectorAll(".optionContainer");
+
+buttons.forEach((button) => {
+    const buttonImg = button.querySelector('img');
+
+    button.addEventListener("click", () => {
+
+        if (button.id != "neverToggle" && !button.classList.contains("noToggle")) {
+
+            button.classList.toggle("buttonIn");
+            buttonImg.classList.toggle("buttonInImg");
+
+            let choiceId = button.getAttribute("id");
+
+            setTimeout(() => {
+                button.classList.toggle("buttonIn");
+                buttonImg.classList.toggle("buttonInImg");
+                playRound(choiceId, getComputerChoice());
+            }, 120);
+        }
+
+    });
+});
+
+
+function changeToggle() {
+    buttons.forEach((button) => {
+        button.classList.toggle("noToggle");
+    })
+}
+
+
+// keep match score
+const scoreContainer = document.querySelector(".scoreContainer");
+const matchCounter = document.createElement("p");
+matchCounter.classList.add("scoreCounter");
+matchCounter.textContent = '0 - 0';
+scoreContainer.appendChild(matchCounter);
+
+
+// keep game score
+const gameContainer = document.querySelector(".gameContainer");
+const gameCounter = document.createElement("p");
+gameCounter.classList.add("scoreCounter");
+gameCounter.textContent = '0 - 0';
+gameContainer.appendChild(gameCounter);
+
+
+// message container
+const messageContainer = document.querySelector(".messageContainer");
+
+
+// play button
+const playButton = document.createElement("p");
+playButton.classList.add("playButton");
+playButton.textContent = 'Play!';
+messageContainer.appendChild(playButton);
+
+
+// message added but not yet appended
+const anyMessage = document.createElement("p");
+anyMessage.classList.add("anyMessage");
+anyMessage.textContent = 'Make your move!  Rock, Paper, Scissors?';
+
+
+playButton.addEventListener("click", () => {
     humanScore = 0;
     computerScore = 0;
-    // set both to zero to start so that consecutive game start at 0
-    // total scores do not reset since they are incremented per game
+    matchCounter.textContent = '0 - 0';
 
-    let begin = confirm('Press "Ok" to play!');
+    opponentImg.src="./images/shruggingMeme.jpeg";
 
-    if (begin == true) {
+    playButton.classList.toggle("playPressed");
+
+    setTimeout(() => {
+        messageContainer.removeChild(playButton);
+        messageContainer.appendChild(anyMessage);
+        changeToggle();
         playGame();
-    }
-    else {
-        let confirmCancel = confirm("Are you sure you want to quit?  Your game progress will be lost.");
+    }, 150);
 
-        if (confirmCancel == true) {
-            alert("Goodbye!  You can reload the page to play again later.");
-        }
-        else {
-            return toBegin();
-        }
-    }
-}
+});
+
+
+// computer image changer
+const opponentImg = document.querySelector("#opponentImg");
 
 
 function getComputerChoice() {
@@ -39,55 +109,22 @@ function getComputerChoice() {
 
     if (computerMove <= 0.33) {
         // console.log("computer chose rock");
+        opponentImg.src="./images/Rock.jpeg";
         return("ROCK");
     }
     else if (computerMove <= 0.66 && computerMove > 0.33) {
         // console.log("computer chose paper");
+        opponentImg.src="./images/cursed_toilet_paper_by_oakhayboomer_deba8vf-fullview.jpg";
         return("PAPER");
         
     }
     else {
         // console.log("computer chose scissors");
+        opponentImg.src="./images/Scissors_cutting_water.jpeg";
         return("SCISSORS");
         
     }
 }
-
-// console.log("getComputerChoice() returned " + getComputerChoice()); // check computer return
-
-
-function getHumanChoice(){
-    let humanMove = prompt("Rock, paper, or scissors?");
-
-    if (humanMove == null || humanMove == undefined || humanMove.toUpperCase() != "ROCK" && humanMove.toUpperCase() != "PAPER" && humanMove.toUpperCase() != "SCISSORS"){
-        return getHumanChoice();
-        // If you hit cancel, escape, hit ok without putting data in, or put the wrong data in this triggers.
-        // .toUpperCase() allows users to put funky stuff like "rOcK" in without triggering this.
-        // It returns the value so that the function doesn't keep an undefined value if this needs to run.
-    }
-
-    else {
-
-        humanMove = humanMove.toUpperCase();
-        // console.log(humanMove);
-
-        if (humanMove === "ROCK"){
-            // console.log("human chose rock");
-            return("ROCK");
-        }
-        else if (humanMove === "PAPER"){
-            // console.log("human chose paper")
-            return("PAPER");
-        }
-        else if (humanMove === "SCISSORS"){
-            // this could have been just "else" but it reads better like this
-            // console.log("human chose scissors");
-            return ("SCISSORS");
-        }
-    }
-}
-
-// console.log("getHumanChoice() returned " + getHumanChoice()); // check human move.  disable when playing
 
 
 function playRound(humanChoice, computerChoice) {
@@ -96,11 +133,9 @@ function playRound(humanChoice, computerChoice) {
         humanChoice === "SCISSORS" && computerChoice === "PAPER"){
 
             humanScore++;
-            // increments humanScore
-            alert("You WIN!  " + humanChoice + " beats " + computerChoice + "!  " 
-                  + "The score is " + humanScore + " to " + computerScore + ".");
-            // Outputs something like:
-            // "You WIN!  ROCK beats SCISSORS!  The score is 3 to 2"
+
+            anyMessage.textContent = `You WIN!  ${humanChoice} beats ${computerChoice}!  Choose again!`;
+            
         }
 
     else if (humanChoice === "ROCK" && computerChoice === "PAPER" ||
@@ -108,235 +143,64 @@ function playRound(humanChoice, computerChoice) {
              humanChoice === "SCISSORS" && computerChoice === "ROCK"){
 
                 computerScore++;
-                // increments computerScore
-                alert("You LOSE!  " + computerChoice + " beats " + humanChoice + "!  " 
-                      + "The score is " + humanScore + " to " + computerScore + ".");
-                // humanScore always showed first for clarity
+                
+                anyMessage.textContent = `You LOSE!  ${computerChoice} beats ${humanChoice}!  Choose again!`;
              }
 
     else {
 
-        alert("DRAW!  " + "You both played " + humanChoice + ".  "
-              + "The score is " + humanScore + " to " + computerScore + ".");
-        // Since both moves were the same, you can just output the value of either
-        // humanChoice or computerChoice since it would look dumb to write both out
+        anyMessage.textContent = `DRAW!  Both players chose ${humanChoice}.  Choose again!`;
     }
+
+    matchCounter.textContent = `${humanScore} - ${computerScore}`;
+
+    playGame();
+
 }
 
 
 function playGame() {
 
-    for (let round = 1; round < 6; round++){
-
-        const humanSelection = getHumanChoice();
-        const computerSelection = getComputerChoice();
-
-        playRound(humanSelection, computerSelection);
-
-        // console.log("There have been this many rounds: " + round);
+    if (humanScore == 5 && humanScore > computerScore || computerScore == 5 && computerScore > humanScore) {
+        changeToggle();
+        endGame();
     }
-
-    endGame();
-
 }
 
 
 function endGame(){
 
+    anyMessage.style.fontSize = "80px";
+    playButton.classList.toggle("playPressed");
+    opponentImg.src="./images/shruggingMeme.jpeg";
+
+
     if (humanScore > computerScore){
 
         totalHumanScore++;
-        // increments per game won for gameResult()
 
-        alert("YOU WON!!!  " + "The final score was " + humanScore + " to " + computerScore + ".");
+        opponentImg.src="./images/CryingMan.png";
+        
+        gameCounter.textContent = `${totalHumanScore} - ${totalComputerScore}`;
+
+        anyMessage.textContent = `YOU WON!!!`;
     }
 
-    else if (humanScore < computerScore){
+    else {
 
         totalComputerScore++;
-        // increments per game won for gameResult()
 
-        alert("YOU LOSE!!!  BOO!!!  YOU SUCK!!!!!!!  " + "The final score was " + humanScore + " to " + computerScore + ".");
+        opponentImg.src="./images/SmilingFace.png";
+
+        gameCounter.textContent = `${totalHumanScore} - ${totalComputerScore}`;
+
+        anyMessage.textContent = `YOU LOSE!!!`;
     }
 
-    else {
-        
-        alert("DRAW!!!  " + "The final score was " + humanScore + " to " + computerScore + ".");
-    }
-
-    gameResult();
-
+    setTimeout(() => {
+        messageContainer.removeChild(anyMessage);
+        anyMessage.style.fontSize = "40px";
+        anyMessage.textContent = 'Make your move!  Rock, Paper, Scissors?';
+        messageContainer.appendChild(playButton);
+    }, 1200);
 }
-
-
-function gameResult(){
-
-    if (totalHumanScore > totalComputerScore){
-        alert("You are winning against The Machine.  You have won " + totalHumanScore + " game(s), and The Machine has won " + totalComputerScore + " game(s).");
-    }
-    else if (totalHumanScore < totalComputerScore){
-        alert("You are losing to The Machine.  You have won " + totalHumanScore + " game(s), and The Machine has won " + totalComputerScore + " game(s).");
-    }
-    else {
-        alert("You and The Machine are all tied up.  You have won " + totalHumanScore + " game(s), and The Machine has won " + totalComputerScore + " game(s).")
-    }
-
-    toBegin();
-
-}
-
-// playGame();
-toBegin();
-
-
-
-
-
-
-
-// playRound(humanSelection, computerSelection);
-
-
-
-
-
-
-
-
-
-// function testingReturn(){
-//     let test = undefined;
-//     return(false ? "BALLS" : "LOL");
-// }
-
-
-// console.log(testingReturn());
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// function buggedPromptReturnsUndefined(buggyFunction){
-//     if (buggyFunction == undefined) {
-//         console.log("I'm going to cry");
-//     }
-//     else {
-//         console.log("Function was not undefined")
-//     }
-// }
-
-// buggedPromptReturnsUndefined(getHumanChoice());
-
-// use above function for checking if one of the functions is undefined
-// figure out how you dont call it more than needed
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// function getHumanChoice() {
-//     let humanMove = prompt("Rock, Paper, or Scissors?");
-//     humanMove = humanMove.toUpperCase();
-//     console.log(humanMove, "humanMove check ran");
-
-//     if 
-// }
-
-// console.log(getHumanChoice()); // check human move.  wont work without return
-
-
-
-/*
-switch(humanMove) {
-        case "ROCK":
-            console.log("human chose rock");
-            break;
-        case "PAPER":
-            console.log("human chose paper");
-            break;
-        case "SCISSORS":
-            console.log("human chose scissors");
-            break;
-        default:
-            humanMove = prompt("Try again.  Rock, paper, or scissors?");
-            humanMove = humanMove.toUpperCase();
-            console.log(humanMove);
-    }
-*/
-
-
-
-
-
-/*
-function getHumanChoice() {
-    let humanMove = prompt("Rock, Paper, or Scissors?");
-
-    if (humanMove == null) {
-        console.log(humanMove);
-        getHumanChoice();
-    }
-    else {
-        humanMove = humanMove.toUpperCase();
-    }
-
-    // if (humanMove != null) {
-    // humanMove = humanMove.toUpperCase();
-    // console.log("I ran 1");
-    // }
-    // else if (humanMove == null){
-    //     getHumanChoice();
-    //     console.log("I ran 2");
-    // }
-    // console.log(humanMove);
-
-    if (humanMove != "ROCK" || humanMove != "PAPER" || humanMove != "SCISSORS") {
-        getHumanChoice();
-        console.log("I ran 3");
-    }
-    else {
-        
-        console.log("I ran 4");
-
-        switch(humanMove) {
-            case "ROCK": // "ROCK"
-                console.log("human chose rock");
-                break;
-            case "PAPER": // "PAPER"
-                console.log("human chose paper");
-                break;
-            case "SCISSORS": // "SCISSORS"
-                console.log("human chose scissors");
-                break;
-            default:
-                // humanMove = prompt("Try again.  Rock, paper, or scissors?");
-                // humanMove = humanMove.toUpperCase;
-                // console.log(humanMove);
-                console.log("What the fuck happened?");
-        }
-    }
-}
-
-console.log("getHumanChoice() returned " + getHumanChoice());
-*/
-
